@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+    postgresql:
+        image: postgres
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: "admin"
+            POSTGRES_USER: "admin"
+            POSTGRES_DB: "db"
+        volumes:
+            - ./pgdata:/var/lib/postgresql/data
+        container_name: two_fast_pg
+
+    pgadmin:
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: "admin@gmail.com"
+            PGADMIN_DEFAULT_PASSWORD: "admin"
+        ports:
+            - 5050:80
+        depends_on:
+            - postgresql
